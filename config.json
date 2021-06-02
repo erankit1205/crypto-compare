@@ -1,5 +1,5 @@
 {
   "limit": 1,
-  "exchange": "Coinbase"
-
+  "exchange": "Coinbase",
+  "apiKey": "abae091077837a897a41dff28e2f52b883bcc13f88a18c36ff68c91b4b4f1633"
 }
