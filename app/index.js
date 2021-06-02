@@ -1,4 +1,4 @@
-let apiKey = "abae091077837a897a41dff28e2f52b883bcc13f88a18c36ff68c91b4b4f1633";
+const apiKey = "abae091077837a897a41dff28e2f52b883bcc13f88a18c36ff68c91b4b4f1633";
 const WebSocket = require('ws');
 const moment = require('moment');
 const axios = require('axios');
@@ -16,10 +16,14 @@ ccStreamer.on('open', function open() {
     ccStreamer.send(JSON.stringify(subRequest));
 });
 
+ccStreamer.on('message', function incoming(data) {
+  webSocketData.push(JSON.parse(data));
+});
+
 setTimeout(async () => {
   ccStreamer.close();
 
-  const volumeFromWebSocket = getWebSocketVolume();
+  const volumeFromWebSocket = getWebSocketVolume(webSocketData, curMin);
   const volumeFromApi = await getApiCallVolume();
   const response  = {
     minuteTimeStamp: curTimeStamp,
@@ -31,10 +35,6 @@ setTimeout(async () => {
   console.log("response", response);
 
 }, 60000);
-
-ccStreamer.on('message', function incoming(data) {
-  webSocketData.push(JSON.parse(data));
-});
 
 const getApiCallVolume = async () => {
   const toTime = Math.round(Date.now() / 1000);
@@ -49,11 +49,12 @@ const getApiCallVolume = async () => {
   return volumeFromApi;
 }
 
-const getWebSocketVolume = () => {
-  webSocketData.splice(0,1);
-  filteredWebSocketData = webSocketData.filter(data => moment(new Date(data.RTS * 1000)).format('mm') === curMin);
+const getWebSocketVolume = (socketData, min) => {
+  socketData.splice(0,1);
+  filteredWebSocketData = socketData.filter(data => moment(new Date(data.RTS * 1000)).format('mm') == min);
   return filteredWebSocketData.reduce((total, data) => {
     return total += data.Q;
   }, 0)
-  
 }
+
+exports.getWebSocketVolume = getWebSocketVolume;
