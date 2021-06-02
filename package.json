@@ -1,0 +1,26 @@
+{
+  "name": "crypto-compare",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "moment": "^2.29.1",
+    "ws": "^7.4.6"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/erankit1205/crypto-compare.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/erankit1205/crypto-compare/issues"
+  },
+  "homepage": "https://github.com/erankit1205/crypto-compare#readme"
+}
